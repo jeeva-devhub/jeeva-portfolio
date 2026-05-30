@@ -314,6 +314,80 @@
     .card p { color: var(--text-muted); line-height: 1.85; font-size: 0.86rem; }
     .card p + p { margin-top: 0.8rem; }
 
+    /* ── MOBILE PROFILE ── */
+    .mob-profile {
+      display: none;
+      align-items: center;
+      gap: 1.1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .mob-photo-wrap { position: relative; flex-shrink: 0; }
+
+    .mob-photo {
+      width: 68px;
+      height: 82px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 10px;
+      border: 2px solid rgba(124,58,237,0.35);
+      display: block;
+    }
+
+    .mob-dot {
+      position: absolute;
+      bottom: -4px; right: -4px;
+      width: 13px; height: 13px;
+      background: #22c55e;
+      border: 2px solid var(--bg3);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .mob-info { flex: 1; min-width: 0; }
+
+    .mob-name {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #a78bfa, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .mob-role {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+      line-height: 1.4;
+    }
+
+    .mob-avail {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      font-size: 0.62rem;
+      color: #22c55e;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50px;
+      padding: 0.15rem 0.5rem;
+      font-weight: 600;
+      margin-top: 0.4rem;
+    }
+    .mob-avail::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
     /* ── OVERVIEW ── */
     #overview { background: linear-gradient(160deg, rgba(124,58,237,0.04) 0%, transparent 60%); }
 
@@ -731,6 +805,7 @@
       .about-grid  { grid-template-columns: 1fr; }
       .contact-wrap { grid-template-columns: 1fr; }
       .projects-grid { grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); }
+      .mob-profile { display: flex; }
     }
 
     @media (max-width: 500px) {
@@ -791,6 +866,20 @@
 
     <!-- ── OVERVIEW ── -->
     <section class="panel" id="overview">
+
+      <!-- shown only on mobile (sidebar is hidden) -->
+      <div class="mob-profile fade-in">
+        <div class="mob-photo-wrap">
+          <img src="jeeva.jpeg" alt="Jeeva Murugesan" class="mob-photo" />
+          <div class="mob-dot"></div>
+        </div>
+        <div class="mob-info">
+          <div class="mob-name">Jeeva Murugesan</div>
+          <div class="mob-role">Frontend &amp; WordPress Developer</div>
+          <div class="mob-avail">Available for work</div>
+        </div>
+      </div>
+
       <div class="ov-greet fade-in">
         <div class="ov-greet-eye">Dashboard</div>
         <h1 class="ov-greet-h">Good to see you 👋 I'm <span>Jeeva</span></h1>
