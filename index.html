@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeeva Murugesan | Frontend & WordPress Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sb: 240px;
+      --tb: 56px;
+      --bg: #0d0d11;
+      --bg2: #13131a;
+      --bg3: #1a1a24;
+      --border: rgba(255,255,255,0.07);
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --r: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sb);
+      height: 100vh;
+      position: fixed;
+      left: 0; top: 0;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 300;
+      overflow-y: auto;
+    }
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .sb-logo {
+      padding: 1.1rem 1.5rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .sb-profile {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sb-photo-wrap {
+      position: relative;
+      width: 82px;
+      margin-bottom: 0.2rem;
+    }
+
+    .sb-photo {
+      width: 82px;
+      height: 98px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 12px;
+      border: 2px solid rgba(124,58,237,0.35);
+      display: block;
+    }
+
+    .sb-dot {
+      position: absolute;
+      bottom: -5px; right: -5px;
+      width: 15px; height: 15px;
+      background: #22c55e;
+      border: 2px solid var(--bg2);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .sb-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .sb-role {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .sb-avail {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.63rem;
+      color: #22c55e;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50px;
+      padding: 0.18rem 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .sb-avail::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 0.85rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .sb-nav-label {
+      font-size: 0.58rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      padding: 0.4rem 0.75rem 0.25rem;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .sb-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.58rem 0.75rem;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.18s;
+    }
+    .sb-link:hover { background: rgba(124,58,237,0.08); color: var(--text); }
+    .sb-link.active { background: rgba(124,58,237,0.14); color: #a78bfa; }
+    .sb-link .ni { font-size: 0.85rem; width: 18px; text-align: center; }
+
+    .sb-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sb-contact {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.66rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.3;
+    }
+    .sb-contact:hover { color: var(--text-muted); }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: var(--sb); right: 0;
+      height: var(--tb);
+      background: rgba(13,13,17,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 200;
+    }
+
+    .tb-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tb-crumb {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      font-family: 'Fira Code', monospace;
+    }
+    .tb-crumb span { color: var(--accent2); }
+
+    .tb-hire {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, var(--accent), #5b21b6);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.42rem 1.05rem;
+      border-radius: 50px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 15px rgba(124,58,237,0.3);
+    }
+    .tb-hire:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .tb-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .tb-hamburger span {
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sb);
+      flex: 1;
+      min-height: 100vh;
+      padding-top: var(--tb);
+    }
+
+    /* ── PANELS ── */
+    .panel {
+      padding: 2.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-hd {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-eye {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.62rem;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.25rem;
+    }
+
+    .panel-title {
+      font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    .panel-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .panel-meta {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(124,58,237,0.25); }
+    .card p { color: var(--text-muted); line-height: 1.85; font-size: 0.86rem; }
+    .card p + p { margin-top: 0.8rem; }
+
+    /* ── OVERVIEW ── */
+    #overview { background: linear-gradient(160deg, rgba(124,58,237,0.04) 0%, transparent 60%); }
+
+    .ov-greet { margin-bottom: 1.75rem; }
+    .ov-greet-eye {
+      font-size: 0.62rem;
+      font-family: 'Fira Code', monospace;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.35rem;
+    }
+    .ov-greet-h {
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .ov-greet-h span {
+      background: linear-gradient(135deg, #a78bfa, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ov-greet-sub { font-size: 0.82rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+    .ov-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .ov-stat {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.2rem 1.3rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .ov-stat:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-2px); }
+    .ov-stat-icon { font-size: 1rem; margin-bottom: 0.55rem; }
+    .ov-stat-num {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ov-stat-lbl { font-size: 0.68rem; color: var(--text-dim); font-weight: 500; margin-top: 0.25rem; }
+
+    .ov-widgets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .ov-widget {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: border-color 0.2s;
+    }
+    .ov-widget:hover { border-color: rgba(124,58,237,0.25); }
+
+    .ov-wlabel {
+      font-size: 0.62rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .ov-wheader { display: flex; align-items: center; justify-content: space-between; }
+
+    .active-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      font-size: 0.62rem;
+      color: #22c55e;
+      font-weight: 700;
+    }
+    .active-pill::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .ov-job-role { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .ov-job-co { font-size: 0.74rem; color: var(--accent2); font-weight: 500; margin-top: 0.1rem; }
+    .ov-job-period { font-size: 0.67rem; color: var(--text-dim); margin-top: 0.05rem; }
+    .ov-job-desc { font-size: 0.74rem; color: var(--text-muted); line-height: 1.75; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .info-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.1rem; }
+    .info-item { display: flex; align-items: center; gap: 0.55rem; font-size: 0.76rem; color: var(--text-muted); }
+    .info-icon {
+      width: 26px; height: 26px;
+      background: rgba(124,58,237,0.1);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .xp-list { display: flex; flex-direction: column; gap: 0.65rem; }
+    .xp-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1rem 1.1rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .xp-card:hover { border-color: rgba(124,58,237,0.25); transform: translateX(3px); }
+    .xp-dot {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+    .xp-dot.purple { background: rgba(124,58,237,0.12); }
+    .xp-dot.cyan   { background: rgba(6,182,212,0.12); }
+    .xp-role { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+    .xp-co   { font-size: 0.7rem; color: var(--accent2); font-weight: 500; margin-top: 0.08rem; }
+    .xp-period { font-size: 0.66rem; color: var(--text-dim); margin-top: 0.05rem; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 0.85rem;
+    }
+    .skill-cat {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.15rem;
+      transition: border-color 0.2s;
+    }
+    .skill-cat:hover { border-color: rgba(124,58,237,0.25); }
+    .skill-cat-title {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+      font-family: 'Fira Code', monospace;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+    .skill-tag {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.27rem 0.6rem;
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: all 0.18s;
+      cursor: default;
+    }
+    .skill-tag:hover {
+      background: rgba(124,58,237,0.1);
+      border-color: rgba(124,58,237,0.4);
+      color: #a78bfa;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline {
+      position: relative;
+      padding-left: 1.6rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+    .tl-item { position: relative; margin-bottom: 1.75rem; }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.8rem;
+      top: 0.45rem;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
+    }
+    .tl-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem;
+      transition: border-color 0.2s;
+    }
+    .tl-card:hover { border-color: rgba(124,58,237,0.25); }
+    .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.55rem;
+    }
+    .tl-role { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+    .tl-badge { font-size: 0.65rem; padding: 0.18rem 0.6rem; border-radius: 50px; font-weight: 600; }
+    .badge-current { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+    .badge-past    { background: rgba(100,116,139,0.1); color: var(--text-dim); border: 1px solid rgba(100,116,139,0.2); }
+    .tl-co { font-size: 0.78rem; color: var(--accent2); font-weight: 500; margin-bottom: 0.15rem; }
+    .tl-period { font-size: 0.68rem; color: var(--text-dim); margin-bottom: 0.85rem; }
+    .tl-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 0.85rem; }
+    .tl-proj-title {
+      font-size: 0.6rem; font-weight: 600; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 0.55rem;
+      font-family: 'Fira Code', monospace;
+    }
+    .proj-links { display: flex; flex-wrap: wrap; gap: 0.38rem; }
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.28rem;
+      background: rgba(6,182,212,0.05);
+      border: 1px solid rgba(6,182,212,0.15);
+      border-radius: 5px;
+      padding: 0.22rem 0.55rem;
+      font-size: 0.68rem;
+      color: var(--accent2);
+      text-decoration: none;
+      font-family: 'Fira Code', monospace;
+      transition: all 0.18s;
+    }
+    .proj-link:hover { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.35); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.85rem;
+    }
+    .proj-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .proj-card:hover { border-color: rgba(124,58,237,0.3); transform: translateY(-3px); }
+    .proj-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.15));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem;
+    }
+    .proj-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .proj-url  { font-size: 0.68rem; color: var(--text-dim); font-family: 'Fira Code', monospace; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.32rem; margin-top: auto; }
+    .proj-tag  {
+      font-size: 0.63rem;
+      padding: 0.15rem 0.48rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-dim);
+    }
+    .proj-arrow { margin-left: auto; color: var(--text-dim); font-size: 0.85rem; transition: transform 0.2s, color 0.2s; }
+    .proj-card:hover .proj-arrow { transform: translate(3px,-3px); color: var(--accent2); }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 0.95rem 1.1rem;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .contact-card:hover { border-color: rgba(124,58,237,0.25); }
+    .contact-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+    .ci-email    { background: rgba(245,158,11,0.1); }
+    .ci-phone    { background: rgba(34,197,94,0.1); }
+    .ci-location { background: rgba(239,68,68,0.1); }
+    .contact-lbl   { font-size: 0.62rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-val   { font-size: 0.8rem; color: var(--text); font-weight: 500; margin-top: 0.08rem; }
+
+    .contact-form {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.6rem;
+    }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.72rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.38rem; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.62rem 0.85rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.03); }
+    .form-group textarea { height: 105px; }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #5b21b6);
+      color: #fff;
+      border: none;
+      padding: 0.72rem;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    .dash-footer {
+      padding: 1.4rem 2.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.7rem;
+    }
+    .dash-footer span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes pulse {
+      0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(34,197,94,.4); }
+      50%      { box-shadow:0 0 0 6px rgba(34,197,94,0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .fade-in { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* sidebar overlay */
+    .sb-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.65);
+      z-index: 250;
+    }
+    .sb-overlay.open { display: block; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      :root { --sb: 215px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --sb: 240px; }
+      .sidebar { transform: translateX(-100%); transition: transform .28s ease; }
+      .sidebar.open { transform: translateX(0); }
+      .topbar { left: 0; }
+      .tb-hamburger { display: flex; }
+      .main { margin-left: 0; }
+      .panel { padding: 1.75rem 1.25rem; }
+      .ov-widgets { grid-template-columns: 1fr; }
+      .about-grid  { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); }
+    }
+
+    @media (max-width: 500px) {
+      .ov-stats { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile overlay -->
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">JM.</div>
+
+    <div class="sb-profile">
+      <div class="sb-photo-wrap">
+        <img src="jeeva.jpeg" alt="Jeeva Murugesan" class="sb-photo" />
+        <div class="sb-dot"></div>
+      </div>
+      <div class="sb-name">Jeeva Murugesan</div>
+      <div class="sb-role">Frontend &amp; WordPress Developer</div>
+      <div class="sb-avail">Available for work</div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-nav-label">Menu</div>
+      <a href="#overview"   class="sb-link active" data-sec="overview">  <span class="ni">⊞</span> Overview</a>
+      <a href="#about"      class="sb-link"         data-sec="about">     <span class="ni">👤</span> About</a>
+      <a href="#skills"     class="sb-link"         data-sec="skills">    <span class="ni">⚡</span> Skills</a>
+      <a href="#experience" class="sb-link"         data-sec="experience"><span class="ni">💼</span> Experience</a>
+      <a href="#projects"   class="sb-link"         data-sec="projects">  <span class="ni">🚀</span> Projects</a>
+      <a href="#contact"    class="sb-link"         data-sec="contact">   <span class="ni">✉️</span> Contact</a>
+    </nav>
+
+    <div class="sb-footer">
+      <a href="mailto:jeeva801280@gmail.com" class="sb-contact"><span>✉️</span> jeeva801280@gmail.com</a>
+      <a href="tel:+918667885142"            class="sb-contact"><span>📱</span> +91 8667885142</a>
+      <div class="sb-contact"><span>📍</span> Karur, Tamilnadu, India</div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="tb-left">
+        <div class="tb-hamburger" id="hamburger" onclick="toggleSidebar()">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="tb-crumb">portfolio / <span id="tbSec">overview</span></div>
+      </div>
+      <a href="#contact" class="tb-hire">Hire Me &rarr;</a>
+    </header>
+
+    <!-- ── OVERVIEW ── -->
+    <section class="panel" id="overview">
+      <div class="ov-greet fade-in">
+        <div class="ov-greet-eye">Dashboard</div>
+        <h1 class="ov-greet-h">Good to see you 👋 I'm <span>Jeeva</span></h1>
+        <p class="ov-greet-sub">Frontend &amp; WordPress Developer &middot; 3+ years building web experiences</p>
+      </div>
+
+      <div class="ov-stats fade-in">
+        <div class="ov-stat">
+          <div class="ov-stat-icon">⚡</div>
+          <div class="ov-stat-num">3+</div>
+          <div class="ov-stat-lbl">Years Experience</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-icon">🚀</div>
+          <div class="ov-stat-num">20+</div>
+          <div class="ov-stat-lbl">Projects Delivered</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-icon">🏢</div>
+          <div class="ov-stat-num">2</div>
+          <div class="ov-stat-lbl">Companies</div>
+        </div>
+      </div>
+
+      <div class="ov-widgets fade-in">
+        <div class="ov-widget">
+          <div class="ov-wheader">
+            <div class="ov-wlabel">Current Role</div>
+            <div class="active-pill">Active</div>
+          </div>
+          <div>
+            <div class="ov-job-role">WordPress Developer</div>
+            <div class="ov-job-co">Redblox &middot; Pondicherry</div>
+            <div class="ov-job-period">May 2025 &mdash; Present</div>
+          </div>
+          <p class="ov-job-desc">Building static, dynamic &amp; e-commerce sites using Elementor, ACF, Avada, and Gutenberg.</p>
+        </div>
+        <div class="ov-widget">
+          <div class="ov-wlabel">Tech Stack</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span><span class="skill-tag">React.js</span>
+            <span class="skill-tag">WordPress</span><span class="skill-tag">Elementor</span>
+            <span class="skill-tag">Tailwind CSS</span><span class="skill-tag">MySQL</span>
+            <span class="skill-tag">ACF</span><span class="skill-tag">Shopify</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section class="panel" id="about">
+      <div class="panel-hd fade-in">
+        <div>
+          <div class="panel-eye">who i am</div>
+          <h2 class="panel-title">About <span>Me</span></h2>
+        </div>
+        <div class="panel-meta">Karur, India</div>
+      </div>
+      <div class="about-grid fade-in">
+        <div class="card">
+          <p>I'm a Web Developer and WordPress Developer with <strong>3+ years of professional experience</strong> crafting responsive, dynamic websites that users love to interact with.</p>
+          <p>I bring together skills in modern frontend technologies — from vanilla HTML/CSS/JavaScript to React.js and Tailwind CSS — along with deep expertise in the WordPress ecosystem including Elementor, ACF, Avada, Gutenberg, and Divi.</p>
+          <p>I care about clean code, performance optimization, and delivering pixel-perfect results that meet both user needs and business goals.</p>
+          <div class="info-list">
+            <div class="info-item"><div class="info-icon">📍</div><span>Karur, Tamilnadu, India</span></div>
+            <div class="info-item"><div class="info-icon">✉️</div><span>jeeva801280@gmail.com</span></div>
+            <div class="info-item"><div class="info-icon">📱</div><span>+91 8667885142</span></div>
+            <div class="info-item"><div class="info-icon">🎓</div><span>MCA — PGP College of Arts &amp; Science</span></div>
+          </div>
+        </div>
+        <div class="xp-list">
+          <div class="xp-card">
+            <div class="xp-dot cyan">💻</div>
+            <div>
+              <div class="xp-role">Web Developer &amp; Frontend Developer</div>
+              <div class="xp-co">Pizo Designs</div>
+              <div class="xp-period">May 2023 – Oct 2024 · 1 yr 6 mos</div>
+            </div>
+          </div>
+          <div class="xp-card">
+            <div class="xp-dot purple">🚀</div>
+            <div>
+              <div class="xp-role">WordPress Developer</div>
+              <div class="xp-co">Redblox, Pondicherry</div>
+              <div class="xp-period">May 2025 – Present · Current</div>
+            </div>
+          </div>
+          <div class="xp-card">
+            <div class="xp-dot cyan">🎓</div>
+            <div>
+              <div class="xp-role">Master of Computer Application</div>
+              <div class="xp-co">PGP College of Arts &amp; Science</div>
+              <div class="xp-period">2021 – 2023 · 7.8 CGPA</div>
+            </div>
+          </div>
+          <div class="xp-card">
+            <div class="xp-dot purple">📚</div>
+            <div>
+              <div class="xp-role">Bachelor of Computer Science</div>
+              <div class="xp-co">PGP College of Arts &amp; Science</div>
+              <div class="xp-period">2018 – 2021 · 7.2 CGPA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ── -->
+    <section class="panel" id="skills">
+      <div class="panel-hd fade-in">
+        <div>
+          <div class="panel-eye">what i know</div>
+          <h2 class="panel-title">Skills &amp; <span>Technologies</span></h2>
+        </div>
+        <div class="panel-meta">5 categories</div>
+      </div>
+      <div class="skills-grid fade-in">
+        <div class="skill-cat">
+          <div class="skill-cat-title">Frontend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span><span class="skill-tag">React.js</span>
+            <span class="skill-tag">Bootstrap</span><span class="skill-tag">Tailwind CSS</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-title">CMS &amp; Platforms</div>
+          <div class="skill-tags">
+            <span class="skill-tag">WordPress</span><span class="skill-tag">Shopify</span>
+            <span class="skill-tag">Elementor</span><span class="skill-tag">Gutenberg</span>
+            <span class="skill-tag">Avada</span><span class="skill-tag">Divi</span><span class="skill-tag">ACF</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-title">Database &amp; Backend</div>
+          <div class="skill-tags"><span class="skill-tag">MySQL</span></div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-title">Tools &amp; Software</div>
+          <div class="skill-tags">
+            <span class="skill-tag">VS Code</span><span class="skill-tag">Git</span>
+            <span class="skill-tag">Sublime Text</span><span class="skill-tag">Adobe Illustrator</span>
+          </div>
+        </div>
+        <div class="skill-cat">
+          <div class="skill-cat-title">Specialisations</div>
+          <div class="skill-tags">
+            <span class="skill-tag">UI Redesign</span><span class="skill-tag">Form Development</span>
+            <span class="skill-tag">Shopify Customization</span>
+            <span class="skill-tag">Performance Optimization</span>
+            <span class="skill-tag">Responsive Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EXPERIENCE ── -->
+    <section class="panel" id="experience">
+      <div class="panel-hd fade-in">
+        <div>
+          <div class="panel-eye">career</div>
+          <h2 class="panel-title">Work <span>Experience</span></h2>
+        </div>
+        <div class="panel-meta">2 companies</div>
+      </div>
+      <div class="timeline fade-in">
+
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="tl-header">
+              <div>
+                <div class="tl-role">WordPress Developer</div>
+                <div class="tl-co">Redblox &mdash; Pondicherry</div>
+                <div class="tl-period">May 2025 &mdash; Present</div>
+              </div>
+              <span class="tl-badge badge-current">Current</span>
+            </div>
+            <p class="tl-desc">Designing, developing, and maintaining websites and web applications. Redesigned a React.js homepage UI and developed destination wedding form pages. Building static, dynamic, and e-commerce websites using WordPress with Elementor, ACF, Avada, and Gutenberg.</p>
+            <div class="tl-proj-title">Projects</div>
+            <div class="proj-links">
+              <a href="https://cleo-jewelry.com/"   target="_blank" class="proj-link">↗ cleo-jewelry.com</a>
+              <a href="https://peakathlete.ie/"     target="_blank" class="proj-link">↗ peakathlete.ie</a>
+              <a href="https://usherretrofit.com/"  target="_blank" class="proj-link">↗ usherretrofit.com</a>
+              <a href="https://smartchoice.al/"     target="_blank" class="proj-link">↗ smartchoice.al</a>
+              <a href="https://microdata.ae/"       target="_blank" class="proj-link">↗ microdata.ae</a>
+              <a href="https://lovutravel.com/"     target="_blank" class="proj-link">↗ lovutravel.com</a>
+              <a href="http://ndproducts.com/"      target="_blank" class="proj-link">↗ ndproducts.com</a>
+              <a href="https://traveophile.com/"    target="_blank" class="proj-link">↗ traveophile.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="tl-header">
+              <div>
+                <div class="tl-role">Web Developer &amp; Frontend Developer</div>
+                <div class="tl-co">Pizo Designs</div>
+                <div class="tl-period">May 2023 &mdash; Oct 2024</div>
+              </div>
+              <span class="tl-badge badge-past">Past</span>
+            </div>
+            <p class="tl-desc">Responsible for designing, building, and maintaining websites and web applications. Ensured websites were visually appealing, user-friendly, and functional using HTML, CSS, JavaScript, and WordPress.</p>
+            <div class="tl-proj-title">Projects</div>
+            <div class="proj-links">
+              <a href="https://ksconstruction.co.in/"    target="_blank" class="proj-link">↗ ksconstruction.co.in</a>
+              <a href="https://sasthaseats.com/"         target="_blank" class="proj-link">↗ sasthaseats.com</a>
+              <a href="https://deltaupvc.in/"            target="_blank" class="proj-link">↗ deltaupvc.in</a>
+              <a href="https://pureartis.in/"            target="_blank" class="proj-link">↗ pureartis.in</a>
+              <a href="https://dheeranpest.com/"         target="_blank" class="proj-link">↗ dheeranpest.com</a>
+              <a href="https://thiyafbs.com/"            target="_blank" class="proj-link">↗ thiyafbs.com</a>
+              <a href="https://integratedenterprise.in/" target="_blank" class="proj-link">↗ integratedenterprise.in</a>
+              <a href="https://socioads.in/"             target="_blank" class="proj-link">↗ socioads.in</a>
+              <a href="https://rkrealitychennai.com/"    target="_blank" class="proj-link">↗ rkrealitychennai.com</a>
+              <a href="https://harbestagro.com/"         target="_blank" class="proj-link">↗ harbestagro.com</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ── -->
+    <section class="panel" id="projects">
+      <div class="panel-hd fade-in">
+        <div>
+          <div class="panel-eye">portfolio</div>
+          <h2 class="panel-title">Featured <span>Projects</span></h2>
+        </div>
+        <div class="panel-meta">12 projects</div>
+      </div>
+      <div class="projects-grid fade-in">
+
+        <a href="https://cleo-jewelry.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">💎</div>
+          <div><div class="proj-name">Cleo Jewelry</div><div class="proj-url">cleo-jewelry.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">E-commerce</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://peakathlete.ie/" target="_blank" class="proj-card">
+          <div class="proj-icon">🏃</div>
+          <div><div class="proj-name">Peak Athlete</div><div class="proj-url">peakathlete.ie</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Sports</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://lovutravel.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">✈️</div>
+          <div><div class="proj-name">Lovu Travel</div><div class="proj-url">lovutravel.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">React.js</span><span class="proj-tag">Travel</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://microdata.ae/" target="_blank" class="proj-card">
+          <div class="proj-icon">📊</div>
+          <div><div class="proj-name">Microdata</div><div class="proj-url">microdata.ae</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Tech</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://smartchoice.al/" target="_blank" class="proj-card">
+          <div class="proj-icon">🏠</div>
+          <div><div class="proj-name">Smart Choice</div><div class="proj-url">smartchoice.al</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Real Estate</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://ksconstruction.co.in/" target="_blank" class="proj-card">
+          <div class="proj-icon">🏗️</div>
+          <div><div class="proj-name">KS Construction</div><div class="proj-url">ksconstruction.co.in</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Construction</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://sasthaseats.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">🪑</div>
+          <div><div class="proj-name">Sastha Seats</div><div class="proj-url">sasthaseats.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Furniture</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://traveophile.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">🌍</div>
+          <div><div class="proj-name">Traveophile</div><div class="proj-url">traveophile.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Travel Blog</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://harbestagro.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">🌾</div>
+          <div><div class="proj-name">Harvest Agro</div><div class="proj-url">harbestagro.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Agriculture</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://usherretrofit.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">🔧</div>
+          <div><div class="proj-name">Usher Retrofit</div><div class="proj-url">usherretrofit.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Engineering</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://rkrealitychennai.com/" target="_blank" class="proj-card">
+          <div class="proj-icon">🏢</div>
+          <div><div class="proj-name">RK Reality Chennai</div><div class="proj-url">rkrealitychennai.com</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Real Estate</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+        <a href="https://deltaupvc.in/" target="_blank" class="proj-card">
+          <div class="proj-icon">🪟</div>
+          <div><div class="proj-name">Delta UPVC</div><div class="proj-url">deltaupvc.in</div></div>
+          <div class="proj-tags"><span class="proj-tag">WordPress</span><span class="proj-tag">Manufacturing</span></div>
+          <span class="proj-arrow">↗</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section class="panel" id="contact">
+      <div class="panel-hd fade-in">
+        <div>
+          <div class="panel-eye">let's talk</div>
+          <h2 class="panel-title">Get In <span>Touch</span></h2>
+        </div>
+      </div>
+      <div class="contact-wrap fade-in">
+        <div class="contact-info">
+          <a href="mailto:jeeva801280@gmail.com" class="contact-card">
+            <div class="contact-icon ci-email">✉️</div>
+            <div><div class="contact-lbl">Email</div><div class="contact-val">jeeva801280@gmail.com</div></div>
+          </a>
+          <a href="tel:+918667885142" class="contact-card">
+            <div class="contact-icon ci-phone">📱</div>
+            <div><div class="contact-lbl">Phone</div><div class="contact-val">+91 8667885142</div></div>
+          </a>
+          <div class="contact-card">
+            <div class="contact-icon ci-location">📍</div>
+            <div><div class="contact-lbl">Location</div><div class="contact-val">Karur, Tamilnadu, India</div></div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+          <!-- Replace YOUR_ACCESS_KEY with the key from web3forms.com -->
+          <input type="hidden" name="access_key" value="175a591f-f502-4e4c-bd35-6b9e81342ad3" />
+          <input type="hidden" name="subject" value="New message from portfolio" />
+          <input type="hidden" name="from_name" value="Jeeva Portfolio" />
+          <input type="checkbox" name="botcheck" style="display:none" />
+
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">Send Message &rarr;</button>
+          <div id="formResult" style="margin-top:.75rem;font-size:.78rem;text-align:center;display:none;"></div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="dash-footer">
+      <p>Designed &amp; built by <span>Jeeva Murugesan</span> &mdash; Frontend &amp; WordPress Developer</p>
+      <p style="margin-top:.3rem;opacity:.6;">Karur, Tamilnadu &bull; jeeva801280@gmail.com</p>
+    </footer>
+
+  </div><!-- /.main -->
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sbOverlay').classList.toggle('open');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sbOverlay').classList.remove('open');
+    }
+
+    // Active nav + topbar label on scroll
+    const panels   = document.querySelectorAll('.panel[id]');
+    const sbLinks  = document.querySelectorAll('.sb-link');
+    const tbSec    = document.getElementById('tbSec');
+
+    const secObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          sbLinks.forEach(l => l.classList.toggle('active', l.dataset.sec === id));
+          tbSec.textContent = id;
+        }
+      });
+    }, { threshold: 0.25 });
+
+    panels.forEach(p => secObs.observe(p));
+
+    // Close sidebar on link click (mobile)
+    sbLinks.forEach(l => l.addEventListener('click', () => {
+      if (window.innerWidth <= 768) closeSidebar();
+    }));
+
+    // Fade-in animations
+    const fadeObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.07 });
+
+    document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
+
+    // Contact form — Web3Forms
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn    = document.getElementById('submitBtn');
+      const result = document.getElementById('formResult');
+      const form   = document.getElementById('contactForm');
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      result.style.display = 'none';
+
+      const data = new FormData(form);
+      const res  = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+
+      if (json.success) {
+        btn.textContent = 'Message Sent!';
+        btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+        result.style.color = '#22c55e';
+        result.textContent = '✓ Your message was delivered to jeeva801280@gmail.com';
+        result.style.display = 'block';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = 'Send Message →';
+          btn.style.background = '';
+          btn.disabled = false;
+          result.style.display = 'none';
+        }, 4000);
+      } else {
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+        result.style.color = '#f87171';
+        result.textContent = '✗ Something went wrong. Please try again.';
+        result.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
